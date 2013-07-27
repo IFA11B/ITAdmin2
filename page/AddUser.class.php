@@ -1,4 +1,6 @@
 <?php
+addPageClass('AddUser');
+
 class AddUser implements Page {
     
     public function getTemplate() {

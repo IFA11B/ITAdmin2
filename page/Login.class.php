@@ -1,4 +1,6 @@
 <?php
+addPageClass('Login');
+
 class Login implements Page {
     public function getTemplate() {
         return 'Login.tpl';

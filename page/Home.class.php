@@ -1,4 +1,6 @@
 <?php
+addPageClass('Home');
+
 class Home implements Page {
     public function getTemplate() {
         return 'Home.tpl';

@@ -1,4 +1,6 @@
 <?php
+addPageClass('AddModule');
+
 class AddModule implements Page {
 
     public function getTemplate() {

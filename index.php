@@ -1,6 +1,12 @@
 <?php
 require ('config.php');
 
+$validPages = array();
+
+function addPageClass($className) {
+    $validPages[] = $className;
+}
+
 loadDir(HOME_DIR . 'exceptions/');
 loadDir(LIB_DIR, array(LIB_DIR . 'smarty'));
 loadDir(PAGE_DIR);
@@ -131,7 +137,7 @@ configureRedBean();
 $smarty = createSmarty();
 
 $pageName = getVar('page', DEFAULT_PAGE);
-if (verifySession() == false) {
+if (verifySession() == false || in_array($pageName, $validPages) == false) {
     $pageName = DEFAULT_PAGE;
 }
 $page = new $pageName();
