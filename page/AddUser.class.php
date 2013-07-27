@@ -7,18 +7,18 @@ class AddUser implements Page {
     
     public function getContent() {
         if (isset($_POST['adduser'])) {
-            $userName = trim(postVar('username'));
-            $password = trim(postVar('password'));
+            $user = R::dispense('user');
             
-            if ($userName != '' && $password != '')
-            {
-                $user = R::dispense('user');
-                $user->name = $userName;
-                $user->password = password_hash($password, PASSWORD_DEFAULT, array('cost' => PASSWORD_COST));
-                $user->createDate = R::isoDate();
+            $user->name = postVar('username');
+            $user->password = password_hash(postVar('password'), PASSWORD_DEFAULT, array('cost' => PASSWORD_COST));
+            $user->createDate = R::isoDate();
+            
+            try {
                 R::store($user);
-                return array('success' => true);
+            } catch (UserExists $e) {
+                return array('success' => false);
             }
+            return array('success' => true);
         }
         
         return array();

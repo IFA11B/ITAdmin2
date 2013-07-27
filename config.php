@@ -1,4 +1,9 @@
 <?php
+// Path relative to domain
+// if site is located under localhost/itadmin/, RELATIVE_PATH should be itadmin/
+// if its located under localhost/, RELATIVE_PATH should be empty
+define('RELATIVE_PATH', 'itadmin/');
+
 define('HOME_DIR', realpath(dirname(__FILE__)) . '/');
 define('LIB_DIR', HOME_DIR . 'lib/');
 define('PAGE_DIR', HOME_DIR . 'page/');

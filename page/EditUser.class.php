@@ -13,8 +13,13 @@ class EditUser implements Page
         {
             $user = R::load('user', postVar('id'));
             $user->name = postVar('username', $user->name);
-            $user->password = password_hash(postVar('password'), PASSWORD_DEFAULT, array('cost' => PASSWORD_COST));
-            $user->createDate = postVar('date', $user->createDate);
+            $user->createDate = postVar('createdate', $user->createDate);
+            
+            $newpw = postVar('password');
+            if ($newpw != '') {
+                $user->password = password_hash($newpw, PASSWORD_DEFAULT, array('cost' => PASSWORD_COST));
+            }
+            
             R::store($user);
         }
         else

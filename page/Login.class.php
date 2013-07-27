@@ -6,18 +6,19 @@ class Login implements Page {
     
     public function getContent() {
         if (isset($_POST['login'])) {
-            $userName = trim(postVar('username'));
-            $password = trim(postVar('password'));
+            $userName = postVar('username');
+            $password = postVar('password');
             
-            if ($userName != '' && $password != '')
-            {
-                $user = R::findOne('user', 'name = ?', array($userName));
-                if ($user->verifyPassword($password)) {
-                    $_SESSION['user'] = $user->id;
-                    header('Location: index.php?page=Home');
-                }
+            $user = R::findOne('user', 'name = ?', array($userName));
+            if ($user->verifyPassword($password)) {
+                $_SESSION['user'] = $user->id;
+            } else {
                 return array('success' => false);
             }
+        }
+        
+        if (isset($_SESSION['user'])) {
+            header('Location: /' . RELATIVE_PATH . 'Home');
         }
         
         return array();

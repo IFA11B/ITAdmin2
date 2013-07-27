@@ -1,0 +1,9 @@
+Order Allow,Deny
+Allow from all
+
+RewriteEngine  on
+RewriteBase /itadmin/
+
+RewriteRule    ^([A-Za-z]+)$ index\.php\?page=$1 [L]
+RewriteRule    ^([A-Za-z]+)/$ index\.php\?module=$1 [L]
+RewriteRule    ^([A-Za-z]+)/([A-Za-z]+)$ index\.php\?module=$1&page=$2 [L]

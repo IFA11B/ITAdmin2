@@ -32,7 +32,7 @@ class User extends RedBean_SimpleModel
     public function update()
     {
         $user = R::findOne('user', 'name = ?', array($this->name));
-        if ($user != null)
+        if ($user != null && $user->id != $this->id)
         {
             throw new UserExists();
         }
