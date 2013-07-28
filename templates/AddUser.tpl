@@ -5,6 +5,7 @@
         <title>Add User</title>
     </head>
     <body>
+        {include file="NavBar.tpl"}
         <form method="POST" action="#">
             <div id="username">
                 <span>Username:</span><input type="text" name="username">

@@ -1,6 +1,6 @@
 <?php
 addPageClass('AddUser');
-moduleAddPage('Users', 'AddUser', 'Add', true);
+moduleAddPage('Users', 'AddUser', 'Add');
 class AddUser implements Page {
     
     public function getTemplate() {

@@ -33,8 +33,29 @@ class EditUser implements Page {
             }
             
             R::store($user);
+        } elseif (isset($_POST['deleteuser'])) {
+            $user = R::load('user', postVar('id'));
+            $privileges = R::findAll('privilege', 'user_id = ?', array($user->id));
+            
+            foreach ($privileges as $privilege) {
+                R::trash($privilege);
+            }
+            
+            R::trash($user);
+            
+            $user = User::loadFirst();
         } else {
-            $user = R::load('user', getVar('user'));
+            if (isset($_GET['user'])) {
+                // load specified user id
+                $user = R::load('user', getVar('user'));
+                
+                if ($user->id == 0) {
+                    // specified user id hasnt been found
+                    $user = User::loadFirst();
+                }
+            } else {
+                $user = User::loadFirst();
+            }
         }
         
         $result = array();
@@ -43,7 +64,7 @@ class EditUser implements Page {
         
         foreach ($modules as $module) {
             $privilege = Privilege::find($user, $module);
-
+            
             $moduleArray[] = array(
                 'id' => $module->id,
                 'name' => $module->name,
@@ -59,3 +80,4 @@ class EditUser implements Page {
         return $result;
     }
 }
+

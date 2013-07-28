@@ -5,6 +5,7 @@
         <title>Add Room</title>
     </head>
     <body>
+        {include file="NavBar.tpl"}
         <form method="POST" action="#">
             <div id="roomNumber">
                 <span>Room Number:</span><input type="number" name="number">

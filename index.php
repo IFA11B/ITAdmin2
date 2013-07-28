@@ -20,7 +20,7 @@ function haveModuleClass($className) {
     global $validModules;
     return in_array($className, $validModules);
 }
-function moduleAddPage($moduleName, $pageClassName, $pageName, $default = false) {
+function moduleAddPage($moduleName, $pageClassName, $pageName = null, $default = false) {
     if (haveModuleClass($moduleName)) {
         $moduleName::addPage($pageClassName, $pageName, $default);
     }
@@ -147,6 +147,8 @@ function createSmarty() {
 session_start();
 configureRedBean();
 $smarty = createSmarty();
+
+$smarty->assign('pathRelative', RELATIVE_PATH);
 
 //
 $moduleName = getVar('module');

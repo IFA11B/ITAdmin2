@@ -37,4 +37,8 @@ class User extends RedBean_SimpleModel
             throw new UserExists();
         }
     }
+    
+    public static function loadFirst() {
+        return R::findOne('user', '1 = 1 ORDER BY id ASC', array());
+    }
 }

@@ -5,6 +5,7 @@
         <title>Add Module</title>
     </head>
     <body>
+        {include file="NavBar.tpl"}
         <form action="#" method="POST">
             <div id="modulename">
                 <span>Module Name:</span><input type="text" name="moduleName">

@@ -5,6 +5,7 @@
         <title>Add Supplier</title>
     </head>
     <body>
+        {include file="NavBar.tpl"}
         <form method="POST" action="#">
             <div id="supplierName">
                 <span>Supplier Name:</span><input type="text" name="name">
