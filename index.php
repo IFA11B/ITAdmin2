@@ -157,14 +157,15 @@ if ($moduleName != null && haveModuleClass($moduleName)) {
     if (verifySession() == false || havePageClass($pageName) == false) {
         $pageName = DEFAULT_PAGE;
     }
-    
-    if (verifySession()) {
-        $navbar = new NavBar();
-        
-        // templates can access values using $navbar.modules.
-        $smarty->assign(array('navbar'=>array('modules' => $navbar->getContent())));
-    }
 }
+
+if (verifySession()) {
+    $navbar = new NavBar();
+
+    // templates can access values using $navbar.modules.
+    $smarty->assign(array('navbar'=>array('modules' => $navbar->getContent())));
+}
+
 $page = new $pageName();
 
 //$smarty->testInstall();
