@@ -1,6 +1,5 @@
 <?php
 addPageClass('AddModule');
-
 class AddModule implements Page {
 
     public function getTemplate() {
@@ -13,11 +12,12 @@ class AddModule implements Page {
             
             $module->name = postVar('moduleName');
             $module->descr = postVar('moduleDescr');
+            $module->defaultRead = (integer) postVar('moduleRead');
+            $module->defaultWrite = (integer) postVar('moduleWrite');
             
             try {
                 R::store($module);
-            }
-            catch (ModuleExists $e) {
+            } catch (ModuleExists $e) {
                 return array('success' => false);
             }
             return array('success' => true);

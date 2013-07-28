@@ -4,8 +4,15 @@ require ('config.php');
 $validPages = array();
 
 function addPageClass($className) {
+    global $validPages;
     $validPages[] = $className;
 }
+
+function havePageClass($className) {
+    global $validPages;
+    return in_array($className, $validPages);
+}
+
 
 loadDir(HOME_DIR . 'exceptions/');
 loadDir(LIB_DIR, array(LIB_DIR . 'smarty'));
@@ -113,6 +120,7 @@ function configureRedBean()
     R::setup('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
     R::$writer->setUseCache(true);
     RedBean_ModelHelper::setModelFormatter(new ITAdminModelFormatter());
+    R::debug(DEBUG_REDBEAN);
 }
 
 /**
@@ -137,7 +145,7 @@ configureRedBean();
 $smarty = createSmarty();
 
 $pageName = getVar('page', DEFAULT_PAGE);
-if (verifySession() == false || in_array($pageName, $validPages) == false) {
+if (verifySession() == false || havePageClass($pageName) == false) {
     $pageName = DEFAULT_PAGE;
 }
 $page = new $pageName();

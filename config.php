@@ -16,4 +16,6 @@ define('DB_PASS', 'entwickler12');
 
 define('PASSWORD_COST', 12);
 
+define('DEBUG_REDBEAN', false);
+
 ?>

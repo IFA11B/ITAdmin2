@@ -19,7 +19,7 @@ class Login implements Page {
             }
         }
         
-        if (isset($_SESSION['user'])) {
+        if (verifySession()) {
             header('Location: /' . RELATIVE_PATH . 'Home');
         }
         

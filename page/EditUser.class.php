@@ -1,6 +1,5 @@
 <?php
 addPageClass('EditUser');
-
 class EditUser implements Page {
 
     public function getTemplate() {
@@ -8,8 +7,6 @@ class EditUser implements Page {
     }
 
     public function getContent() {
-        $result = array();
-        
         if (isset($_POST['edituser'])) {
             $user = R::load('user', postVar('id'));
             $user->name = postVar('username', $user->name);
@@ -20,44 +17,54 @@ class EditUser implements Page {
                 $user->password = password_hash($newpw, PASSWORD_DEFAULT, array('cost' => PASSWORD_COST));
             }
             
-            $modules = R::findAll('modules');
-            $moduleArray = array();
-            
-            foreach ($modules as $module) {
-                // find existing link between user and module
-                $link = R::findOne(
-                    'link_user_module',
-                    ' user = :user AND module = :module ',
-                    array(':user' => $user->id, 'module' => $module->id));
+            foreach (postVar('read') as $moduleid) {
+                // turn moduleid into a module bean
+                $module = R::load('module', $moduleid);
                 
-                if ($link == null) {
-                    // link between user and module doesnt exist yet, so lets create one
-                    $link = R::dispense('link_user_module');
-                    
-                    $link->user = $user;
-                    $link->module = $module;
-                    $link->canRead = $module->defaultRead;
-                    $link->canWrite = $module->defaultWrite;
-                    
-                    // we store now so $link has a valid id (non-zero), which we need for editing the user.
-                    R::store($link);
-                }
+                // find privilege bean for user and module, or create a new one if it doesnt exist yet
+                $privilege = Privilege::find($user, $module);
                 
-                // at this point we have a valid link object
-                // ... hopefully
+                // grant read rights to user for module
+                $privilege->canRead = true;
                 
-
-                $moduleArray[] = array('module' => $module->id, 'name' => $module->name, 'read' => $link->canRead,
-                    'write' => $link->canWrite);
+                // store changes
+                R::store($privilege);
             }
             
-            $result['modules'] = $moduleArray;
+            foreach (postVar('write') as $moduleid) {
+                // turn moduleid into a module bean
+                $module = R::load('module', $moduleid);
+            
+                // find privilege bean for user and module, or create a new one if it doesnt exist yet
+                $privilege = Privilege::find($user, $module);
+            
+                // grant read rights to user for module
+                $privilege->canWrite = true;
+            
+                // store changes
+                R::store($privilege);
+            }
             
             R::store($user);
         } else {
             $user = R::load('user', getVar('user'));
         }
         
+        $result = array();
+        $moduleArray = array();
+        $modules = R::findAll('module');
+        
+        foreach ($modules as $module) {
+            $privilege = Privilege::find($user, $module);
+
+            $moduleArray[] = array(
+                'id' => $module->id,
+                'name' => $module->name,
+                'read' => $privilege->canRead,
+                'write' => $privilege->canWrite);
+        }
+        
+        $result['modules'] = $moduleArray;
         $result['id'] = $user->id;
         $result['name'] = $user->name;
         $result['date'] = $user->createDate;
