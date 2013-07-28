@@ -1,5 +1,6 @@
 <?php
 addPageClass('EditUser');
+moduleAddPage('Users', 'EditUser', 'Edit');
 class EditUser implements Page {
 
     public function getTemplate() {
@@ -18,30 +19,16 @@ class EditUser implements Page {
             }
             
             foreach (postVar('read') as $moduleid) {
-                // turn moduleid into a module bean
                 $module = R::load('module', $moduleid);
-                
-                // find privilege bean for user and module, or create a new one if it doesnt exist yet
                 $privilege = Privilege::find($user, $module);
-                
-                // grant read rights to user for module
                 $privilege->canRead = true;
-                
-                // store changes
                 R::store($privilege);
             }
             
             foreach (postVar('write') as $moduleid) {
-                // turn moduleid into a module bean
                 $module = R::load('module', $moduleid);
-            
-                // find privilege bean for user and module, or create a new one if it doesnt exist yet
                 $privilege = Privilege::find($user, $module);
-            
-                // grant read rights to user for module
                 $privilege->canWrite = true;
-            
-                // store changes
                 R::store($privilege);
             }
             

@@ -14,6 +14,7 @@ class Login implements Page {
             $user = R::findOne('user', 'name = ?', array($userName));
             if ($user->verifyPassword($password)) {
                 $_SESSION['user'] = $user->id;
+                $_SESSION['userAddr'] = $_SERVER['REMOTE_ADDR'];
             } else {
                 return array('success' => false);
             }

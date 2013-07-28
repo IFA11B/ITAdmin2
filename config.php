@@ -6,7 +6,8 @@ define('RELATIVE_PATH', 'itadmin/');
 
 define('HOME_DIR', realpath(dirname(__FILE__)) . '/');
 define('LIB_DIR', HOME_DIR . 'lib/');
-define('PAGE_DIR', HOME_DIR . 'page/');
+define('PAGES_DIR', HOME_DIR . 'pages/');
+define('MODULES_DIR', HOME_DIR . 'modules/');
 define('SMARTY_DIR', LIB_DIR . 'smarty/');
 
 define('DB_HOST', 'localhost');
@@ -16,6 +17,9 @@ define('DB_PASS', 'entwickler12');
 
 define('PASSWORD_COST', 12);
 
-define('DEBUG_REDBEAN', false);
+
+define('DEBUG', false);
+define('DEBUG_REDBEAN', false || DEBUG);
+define('DEBUG_SMARTY', false || DEBUG);
 
 ?>

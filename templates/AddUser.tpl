@@ -12,6 +12,9 @@
             <div id="password">
                 <span>Password:</span><input type="password" name="password">
             </div>
+            
+            {include file='Privileges.tpl'}
+            
             <input type="submit" name="adduser" value="Add User">
         </form>
     </body>
