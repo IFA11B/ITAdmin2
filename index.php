@@ -20,7 +20,7 @@ function haveModuleClass($className) {
     global $validModules;
     return in_array($className, $validModules);
 }
-function moduleAddPage($moduleName, $pageClassName, $pageName = null, $default = false) {
+function moduleAddPage($moduleName, $pageClassName, $pageName = false, $default = false) {
     if (haveModuleClass($moduleName)) {
         $moduleName::addPage($pageClassName, $pageName, $default);
     }
@@ -165,7 +165,7 @@ if (verifySession()) {
     $navbar = new NavBar();
 
     // templates can access values using $navbar.modules.
-    $smarty->assign(array('navbar'=>array('modules' => $navbar->getContent())));
+    $smarty->assign(array('navbar' => array('modules' => $navbar->getContent())));
 }
 
 $page = new $pageName();
