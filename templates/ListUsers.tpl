@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>Add User</title>
+        <title>List Users</title>
     </head>
     <body>
         {include file="NavBar.tpl"}
