@@ -1,5 +1,6 @@
 <?php
 addPageClass('AddComponent');
+moduleAddPage('Components', 'AddComponent', 'Add');
 class AddComponent implements Page {
 
     public function getTemplate() {
@@ -79,14 +80,18 @@ class AddComponent implements Page {
             $result['rooms'] = array();
             $rooms = R::findAll('room', 'ORDER BY number ASC');
             
-            foreach($rooms as $room) {
-                $result['rooms'][] = array('id' => $room->id, 'number' => $room->number, 'name' => $room->name, 'note' => $room->note);
+            foreach ($rooms as $room) {
+                $result['rooms'][] = array(
+                    'id' => $room->id,
+                    'number' => $room->number,
+                    'name' => $room->name,
+                    'note' => $room->note);
             }
             
             $result['suppliers'] = array();
             $suppliers = R::findAll('supplier', 'ORDER BY name ASC');
             
-            foreach($suppliers as $supplier) {
+            foreach ($suppliers as $supplier) {
                 $result['suppliers'][] = array('id' => $supplier->id, 'name' => $supplier->name);
             }
             

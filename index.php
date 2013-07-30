@@ -2,24 +2,29 @@
 require ('config.php');
 
 $validPages = array();
+
 function addPageClass($className) {
     global $validPages;
     $validPages[] = $className;
 }
+
 function havePageClass($className) {
     global $validPages;
     return in_array($className, $validPages);
 }
 
 $validModules = array();
+
 function addModuleClass($className) {
     global $validModules;
-    $validModules[]=$className;
+    $validModules[] = $className;
 }
+
 function haveModuleClass($className) {
     global $validModules;
     return in_array($className, $validModules);
 }
+
 function moduleAddPage($moduleName, $pageClassName, $pageName = false, $default = false) {
     if (haveModuleClass($moduleName)) {
         $moduleName::addPage($pageClassName, $pageName, $default);
@@ -72,8 +77,9 @@ function loadDir($directory, array $excluded = array()) {
  * @return (string &#124; NULL)
  */
 function getVar($key, $default = null) {
-    if (isset($_GET[$key]) === true)
+    if (isset($_GET[$key]) === true) {
         return $_GET[$key];
+    }
     return $default;
 }
 
@@ -85,8 +91,9 @@ function getVar($key, $default = null) {
  * @return (string &#124; NULL)
  */
 function postVar($key, $default = null) {
-    if (isset($_POST[$key]) === true)
+    if (isset($_POST[$key]) === true) {
         return $_POST[$key];
+    }
     return $default;
 }
 
@@ -98,8 +105,9 @@ function postVar($key, $default = null) {
  * @return (string &#124; NULL)
  */
 function sessionVar($key, $default = null) {
-    if (isset($_SESSION[$key]) === true)
+    if (isset($_SESSION[$key]) === true) {
         return $_SESSION[$key];
+    }
     return $default;
 }
 
@@ -152,6 +160,16 @@ $smarty->assign('pathRelative', RELATIVE_PATH);
 
 //
 $moduleName = getVar('module');
+/* START FIX BUGS */
+// That i even have to do this boggles my mind, but apparently Modules cant be used as a GET variable.
+// It gets turned into modules, Module works, as does Modulea. Modules doesnt.
+// No clue why this happens and im in a little rush to get things working, so lets make a special
+// exception to work around this bullshit.
+// GODDAMNIT WHY DO YOU NOT WORK.
+if ($moduleName === 'modules') {
+    $moduleName = 'Modules';
+}
+/* END FIX BUGS */
 if ($moduleName != null && haveModuleClass($moduleName)) {
     $pageName = $moduleName::getPage(getVar('page'));
 } else {
@@ -163,7 +181,7 @@ if ($moduleName != null && haveModuleClass($moduleName)) {
 
 if (verifySession()) {
     $navbar = new NavBar();
-
+    
     // templates can access values using $navbar.modules.
     $smarty->assign(array('navbar' => array('modules' => $navbar->getContent())));
 }

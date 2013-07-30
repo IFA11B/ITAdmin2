@@ -1,11 +1,11 @@
 <?php
 addPageClass('Login');
-
 class Login implements Page {
+
     public function getTemplate() {
         return 'Login.tpl';
     }
-    
+
     public function getContent() {
         if (isset($_POST['login'])) {
             $userName = postVar('username');
@@ -21,7 +21,20 @@ class Login implements Page {
         }
         
         if (verifySession()) {
-            header('Location: /' . RELATIVE_PATH . 'Home');
+            $page = getVar('page');
+            $module = getVar('module');
+            
+            $newPage = 'Home';
+            if (strlen($module) > 0) {
+                $newPage = $module . '/';
+                
+                if (strlen($page) > 0) {
+                    $newPage .= $page;
+                }
+            } elseif (strlen($page) > 0) {
+                $newPage = $page;
+            }
+            header('Location: /' . RELATIVE_PATH . $newPage);
         }
         
         return array();
