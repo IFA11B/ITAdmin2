@@ -19,6 +19,7 @@
                     <option value="number">Numerical Value</option>
                     <option value="string">Short Text</option>
                     <option value="text">Long Text</option>
+                    <option value="date">Date</option>
                     <option value="ip">IP Address</option>
                     <option value="email">eMail Address</option>
                     <option value="enum">Enumeration</option>

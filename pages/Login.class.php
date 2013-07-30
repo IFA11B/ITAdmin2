@@ -25,13 +25,13 @@ class Login implements Page {
             $module = getVar('module');
             
             $newPage = 'Home';
-            if (strlen($module) > 0) {
+            if (haveModuleClass($module)) {
                 $newPage = $module . '/';
                 
-                if (strlen($page) > 0) {
+                if (havePageClass($page)) {
                     $newPage .= $page;
                 }
-            } elseif (strlen($page) > 0) {
+            } elseif (havePageClass($page)) {
                 $newPage = $page;
             }
             header('Location: /' . RELATIVE_PATH . $newPage);

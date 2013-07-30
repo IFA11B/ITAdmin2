@@ -20,7 +20,7 @@
             <tbody>
                 {foreach $components as $component}
                 <tr>
-                    <td>{$component.id}</td>
+                    <td><a href="/{$pathRelative}Components/Edit?component={$component.id}">{$component.id}</a></td>
                     <td>{$component.archetype}</td>
                     <td>{$component.roomNumber} - {$component.roomName}</td>
                     <td>{$component.manufacturer}</td>

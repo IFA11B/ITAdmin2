@@ -55,7 +55,7 @@
                         {elseif $attribute.dataType == 'eMail'}
                             <input type="email" name="propertyContent[]">
                         {elseif $attribute.dataType == 'ip'}
-                            <input type="text" name="propertyContent[]">
+                            <input type="text" name="propertyContent[]" pattern="(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)">
                         {elseif $attribute.dataType == 'text'}
                             <textarea rows="3" cols="32" name="propertyContent[]"></textarea>
                         {elseif $attribute.dataType == 'enum'}
