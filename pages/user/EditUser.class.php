@@ -10,29 +10,32 @@ class EditUser implements Page {
     public function getContent() {
         if (isset($_POST['edituser'])) {
             $user = R::load('user', postVar('id'));
-            $user->name = postVar('username', $user->name);
-            $user->createDate = postVar('createdate', $user->createDate);
             
-            $newpw = postVar('password');
-            if ($newpw != '') {
-                $user->password = password_hash($newpw, PASSWORD_DEFAULT, array('cost' => PASSWORD_COST));
+            if ($user->id != 0) {
+                $user->name = postVar('username', $user->name);
+                $user->createDate = postVar('createdate', $user->createDate);
+                
+                $newpw = postVar('password');
+                if ($newpw != '') {
+                    $user->password = password_hash($newpw, PASSWORD_DEFAULT, array('cost' => PASSWORD_COST));
+                }
+                
+                foreach (postVar('read') as $moduleid) {
+                    $module = R::load('module', $moduleid);
+                    $privilege = Privilege::find($user, $module);
+                    $privilege->canRead = true;
+                    R::store($privilege);
+                }
+                
+                foreach (postVar('write') as $moduleid) {
+                    $module = R::load('module', $moduleid);
+                    $privilege = Privilege::find($user, $module);
+                    $privilege->canWrite = true;
+                    R::store($privilege);
+                }
+                
+                R::store($user);
             }
-            
-            foreach (postVar('read') as $moduleid) {
-                $module = R::load('module', $moduleid);
-                $privilege = Privilege::find($user, $module);
-                $privilege->canRead = true;
-                R::store($privilege);
-            }
-            
-            foreach (postVar('write') as $moduleid) {
-                $module = R::load('module', $moduleid);
-                $privilege = Privilege::find($user, $module);
-                $privilege->canWrite = true;
-                R::store($privilege);
-            }
-            
-            R::store($user);
         } elseif (isset($_POST['deleteuser'])) {
             $user = R::load('user', postVar('id'));
             $privileges = R::findAll('privilege', 'user_id = ?', array($user->id));

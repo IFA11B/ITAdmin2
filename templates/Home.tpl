@@ -1,12 +1,4 @@
-<!DOCTYPE html>
+{include file="Header.tpl" title="Home" displayNavbar=true}
+<h1>HOME</h1>
 
-<html>
-	<head>
-	   <title>Home</title>
-	</head>
-	<body>
-		<h1>HOME</h1>
-	    
-	    {include file="NavBar.tpl"}
-	</body>
-</html>
+{include file="Footer.tpl"}

@@ -13,36 +13,38 @@ class EditComponent implements Page {
         if (isset($_POST['editcomponent'])) {
             $component = R::load('component', postVar('id'));
             
-            $component->manufacturer = postVar('manufacturer');
-            $component->purchaseDate = postVar('purchaseDate');
-            $component->warrantyDuration = postVar('warrantyDuration');
-            $component->note = postVar('note');
-            $component->room = R::load('room', postVar('room'));
-            $component->supplier = R::load('supplier', postVar('supplier'));
-            
-            $properties = postVar('properties');
-            $propertyContent = postVar('propertyContent');
-            
-            if (count($properties) !== count($propertyContent)) {
-                die("the fuck?");
-            }
-            
-            for ($index = 0; $index < count($properties); $index += 1) {
-                $property = R::load('property', $properties[$index]);
+            if ($component->id != 0) {
+                $component->manufacturer = postVar('manufacturer');
+                $component->purchaseDate = postVar('purchaseDate');
+                $component->warrantyDuration = postVar('warrantyDuration');
+                $component->note = postVar('note');
+                $component->room = R::load('room', postVar('room'));
+                $component->supplier = R::load('supplier', postVar('supplier'));
                 
-                $property->content = $propertyContent[$index];
+                $properties = postVar('properties');
+                $propertyContent = postVar('propertyContent');
                 
-                // potential exceptions here
-                // in the interest of saving time, error handling has been cut to a bare minimum.
-                // should you find yourself with too much time on your hand, please add error handling.
-                R::store($property);
-            }
-            
-            try {
-                R::store($component);
-                $result['success'] = true;
-            } catch (ComponentExists $e) {
-                $result['success'] = false;
+                if (count($properties) !== count($propertyContent)) {
+                    die("the fuck?");
+                }
+                
+                for ($index = 0; $index < count($properties); $index += 1) {
+                    $property = R::load('property', $properties[$index]);
+                    
+                    $property->content = $propertyContent[$index];
+                    
+                    // potential exceptions here
+                    // in the interest of saving time, error handling has been cut to a bare minimum.
+                    // should you find yourself with too much time on your hand, please add error handling.
+                    R::store($property);
+                }
+                
+                try {
+                    R::store($component);
+                    $result['success'] = true;
+                } catch (ComponentExists $e) {
+                    $result['success'] = false;
+                }
             }
         } else {
             if (isset($_GET['component'])) {
