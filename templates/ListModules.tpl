@@ -3,6 +3,7 @@
     <thead>
         <tr>
             <td>ID</td>
+            <td>Order</td>
             <td>Name</td>
             <td>Description</td>
         </tr>
@@ -11,7 +12,8 @@
         {foreach $modules as $module}
         <tr>
             <td>{$module.id}</td>
-            <td>{$module.name}</td>
+            <td>{$module.order}</td>
+            <td><a href="/{$pathRelative}Modules/Edit?moduleid={$module.id}">{$module.name}</a></td>
             <td>{$module.descr}</td>
         </tr>
         {/foreach}

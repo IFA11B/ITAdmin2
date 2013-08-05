@@ -11,4 +11,4 @@
     
     <input type="submit" name="adduser" value="Add User">
 </form>
-{include file="Footer.tpl"}l>
+{include file="Footer.tpl"}

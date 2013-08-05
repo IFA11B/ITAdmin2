@@ -19,6 +19,7 @@
                 <option value="{$room.id}" title="{$room.note}" {if $room.id == $component.room} selected {/if}>{$room.number} - {$room.name}</option>
             {/foreach}
         </select>
+        <a href="/{$pathRelative}AddRoom">Add Room</a>
     </div>
     <div id="componentSupplier">
         <span>Select Supplier:</span>
@@ -27,6 +28,7 @@
                 <option value="{$supplier.id}" {if $supplier.id == $component.supplier} selected {/if}>{$supplier.name}</option>
             {/foreach}
         </select>
+        <a href="/{$pathRelative}AddSupplier">Add Supplier</a>
     </div>
     
     <!-- Now comes the fun part of arbitrary attributes -->

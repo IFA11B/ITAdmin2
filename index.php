@@ -180,7 +180,7 @@ if ($moduleName != null && haveModuleClass($moduleName)) {
 }
 
 if (verifySession()) {
-    $navbar = new NavBar();
+    $navbar = new Navbar();
     
     // templates can access values using $navbar.modules.
     $smarty->assign(array('navbar' => array('modules' => $navbar->getContent())));

@@ -12,7 +12,9 @@ class AddModule implements Page {
             $module = R::dispense('module');
             
             $module->name = postVar('moduleName');
-            $module->descr = postVar('moduleDescr');
+            $module->className = postVar('moduleClassName');
+            $module->sortOrder = postVar('moduleSortOrder');
+            $module->description = postVar('moduleDescription');
             $module->defaultRead = (integer) postVar('moduleRead');
             $module->defaultWrite = (integer) postVar('moduleWrite');
             

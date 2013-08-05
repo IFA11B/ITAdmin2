@@ -1,13 +1,13 @@
 <?php
-class NavBar implements Page {
+class Navbar implements Page {
 
     public function getTemplate() {
         return '';
     }
 
     public function getContent() {
-        $modules = R::findAll('module');
-        $user = R::findOne('user', 'id = ?', array(sessionVar('user')));
+        $modules = R::findAll('module', 'ORDER BY sort_order ASC, name ASC');
+        $user = R::load('user', sessionVar('user'));
         
         $result = array();
         
@@ -17,8 +17,8 @@ class NavBar implements Page {
             $result[] = array(
                 'id' => $module->id,
                 'name' => $module->name,
-                'descr' => $module->descr,
-                'link' => '/' . RELATIVE_PATH . $module->name . '/',
+                'descr' => $module->description,
+                'link' => '/' . RELATIVE_PATH . $module->className . '/',
                 'read' => $privilege->canRead,
                 'write' => $privilege->canWrite);
         }

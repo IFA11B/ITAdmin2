@@ -9,4 +9,8 @@ class Module extends RedBean_SimpleModel {
             throw new ModuleExists();
         }
     }
+    
+    public static function loadFirst() {
+        return R::findOne('module', '1 = 1 ORDER BY id ASC', array());
+    }
 }
